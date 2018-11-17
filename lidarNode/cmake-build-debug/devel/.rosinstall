@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/yxt/catkin_ws/src/lidarNode/cmake-build-debug/devel/setup.sh

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: lidarNode
+Description: Description of lidarNode
+Version: 0.0.0
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/yxt/catkin_ws/src/lidarNode/cmake-build-debug/devel
+
+Name: lidarNode
+Description: Description of lidarNode
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yxt/catkin_ws/src/lidarNode/cmake-build-debug/devel/lib 
+Requires: 
