@@ -1,0 +1,8 @@
+prefix=/home/yxt/catkin_ws/src/cameraNode/cmake-build-debug/devel
+
+Name: cameraNode
+Description: Description of cameraNode
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yxt/catkin_ws/src/cameraNode/cmake-build-debug/devel/lib 
+Requires: 
