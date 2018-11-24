@@ -36,6 +36,14 @@ CameraNode::CameraNode()
 
 CameraNode::~CameraNode()
 {
+	CameraPtr pCam = NULL;
+	for (unsigned int i = 0; i < camList.GetSize(); i++)
+	{
+		// Select camera
+		pCam = camList.GetByIndex(i);
+		// Deinitialize camera
+		pCam->DeInit();
+	}
 	// Clear camera list before releasing system
 	camList.Clear();
 	// Release system
@@ -254,7 +262,7 @@ int CameraNode::RunSingleCamera(CameraPtr pCam)
 		INodeMap & nodeMapTLDevice = pCam->GetTLDeviceNodeMap();
 		//result = PrintDeviceInfo(nodeMapTLDevice);
 		// Initialize camera
-		pCam->Init();
+		//pCam->Init();
 		// Retrieve GenICam nodemap
 		INodeMap & nodeMap = pCam->GetNodeMap();
 		// Configure image events
@@ -269,7 +277,7 @@ int CameraNode::RunSingleCamera(CameraPtr pCam)
 		// Reset image events
 		result = result | ResetImageEvents(pCam, imageEventHandler);
 		// Deinitialize camera
-		pCam->DeInit();
+		//pCam->DeInit();
 	}
 	catch (Spinnaker::Exception &e)
 	{
@@ -292,10 +300,12 @@ void CameraNode::Callback(const sensor_msgs::PointCloud2 &scan)
 		result = result | this->RunSingleCamera(camList.GetByIndex(i));
 		//cout << "Camera " << i << " example complete..." << endl << endl;
 	}
+	mcount++;
 }
 
 void CameraNode::run()
 {
+	CameraPtr pCam = NULL;
 
 	// Finish if there are no cameras
 	if (numCameras == 0)
@@ -308,6 +318,13 @@ void CameraNode::run()
 		return;
 	}
 
+	// initialize
+	for (unsigned int i = 0; i < camList.GetSize(); ++i) {
+		pCam = camList.GetByIndex(i);
+		pCam->Init();
+	}
+	ros::spin();
+
 }
 
 int main(int argc, char** argv)
@@ -316,7 +333,6 @@ int main(int argc, char** argv)
 	CameraNode cameranode;
 	cameranode.run();
 
-	ros::spin();
 	return 0;
 
 }
