@@ -260,9 +260,6 @@ int CameraNode::RunSingleCamera(CameraPtr pCam)
 	{
 		// Retrieve TL device nodemap and print device information
 		INodeMap & nodeMapTLDevice = pCam->GetTLDeviceNodeMap();
-		//result = PrintDeviceInfo(nodeMapTLDevice);
-		// Initialize camera
-		//pCam->Init();
 		// Retrieve GenICam nodemap
 		INodeMap & nodeMap = pCam->GetNodeMap();
 		// Configure image events
@@ -277,7 +274,6 @@ int CameraNode::RunSingleCamera(CameraPtr pCam)
 		// Reset image events
 		result = result | ResetImageEvents(pCam, imageEventHandler);
 		// Deinitialize camera
-		//pCam->DeInit();
 	}
 	catch (Spinnaker::Exception &e)
 	{

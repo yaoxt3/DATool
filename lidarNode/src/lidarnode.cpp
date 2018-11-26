@@ -17,6 +17,8 @@
 
 using namespace std;
 
+string path = "/home/yxt/test/lidar/";
+
 class LidarNode{
 public:
 	LidarNode();
@@ -25,10 +27,12 @@ public:
 private:
 	ros::NodeHandle node_handle;
 	ros::Subscriber point_sub;
+	int mcount;
 };
 
 LidarNode::LidarNode(){
 	ROS_INFO("initialize");
+	mcount = 0;
 	point_sub = node_handle.subscribe("velodyne_points", 1028, &LidarNode::Callback, this);
 }
 
@@ -37,19 +41,19 @@ void LidarNode::Callback(const sensor_msgs::PointCloud2 &scan){
 	pcl_conversions::toPCL(scan,pcl_pc);
 	pcl::PointCloud<pcl::PointXYZI>::Ptr teamp(new pcl::PointCloud<pcl::PointXYZI>);
 	pcl::fromPCLPointCloud2(pcl_pc,*teamp);
-	stringstream times;
-	string rostime;
-	times << ros::Time::now();
-	times >> rostime;
-	rostime = "/home/yxt/test/" + rostime;
+
+	ostringstream filename;
+	filename << path;
+	filename << mcount << ".txt";
 	// write pointcloud data to file
 	ofstream out;
-	out.open(rostime.c_str(),ios::out|ios::app);
+	out.open(filename.str().c_str(),ios::out|ios::app);
 
 	for (int i = 0; i < teamp->size(); ++i) {
 		out << teamp->points[i].x << " " << teamp->points[i].y << " " << teamp->points[i].z << " " << teamp->points[i].intensity << endl;
 	}
-	cout << "end." << endl;
+	mcount++;
+	cout << "file saved at " << filename.str() << endl;
 }
 
 int main(int argc, char **argv){

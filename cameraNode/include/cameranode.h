@@ -21,6 +21,7 @@ using namespace std;
 
 int mcount = 0;
 string mfilename="";
+string path = "/home/yxt/test/camera/";
 
 class ImageEventHandler : public ImageEvent
 {
@@ -75,13 +76,13 @@ public:
 				// Create a unique filename and save image
 				ostringstream filename;
 
-				filename << "/home/yxt/test/camera/";
-				//if (m_deviceSerialNumber != "")
-				//{
-				//	filename << m_deviceSerialNumber.c_str() << "-";
-				//}
+				filename << path;
+				if (m_deviceSerialNumber != "")
+				{
+					filename << m_deviceSerialNumber.c_str() << "-";
+				}
 				//filename << m_imageCnt << ".jpg";
-				filename << mfilename.c_str() << ".jpg";
+				filename << mcount << ".jpg";
 				convertedImage->Save(filename.str().c_str());
 
 				cout << "Image saved at " << filename.str() << endl;
